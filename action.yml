@@ -1,5 +1,8 @@
 name: 'Setup Binaryen'
 description: 'Setup binaryen tools'
+branding:
+  icon: code
+  color: purple
 inputs:
   token:
     description: "Github Token"

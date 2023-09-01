@@ -2,7 +2,7 @@
     "name": "setup-binaryen",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/index.js",
+    "main": "dist/setup-binaryen.js",
     "scripts": {
         "build": "vite build"
     },

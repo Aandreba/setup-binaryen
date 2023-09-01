@@ -2,6 +2,7 @@ import * as core from "@actions/core"
 import * as github from "@actions/github"
 import * as cache from "@actions/tool-cache"
 import * as assert from "node:assert"
+import * as path from "node:path"
 
 async function main() {
     brk: try {
@@ -22,6 +23,7 @@ async function main() {
 
         assert.match(release.data.tag_name, /^version\_/g)
         const version = release.data.tag_name.substring(8)
+        core.debug(`found Binaryen (version ${version})`)
 
         let os: string
         switch (process.platform) {
@@ -54,6 +56,7 @@ async function main() {
         }
 
         const target = `${arch}-${os}`
+        core.debug(`target platform: ${target}`)
         const end = `${target}.tar.gz`
 
         const cachedPath = cache.find("binaryen", version, target)
@@ -65,11 +68,12 @@ async function main() {
 
         for (let asset of release.data.assets) {
             if (!asset.name.endsWith(end)) continue
+            core.debug(`found matching asset: ${asset.name}`)
 
             const tarball = await cache.downloadTool(asset.browser_download_url)
             const extracted = await cache.extractTar(tarball)
             const cached = await cache.cacheDir(
-                extracted,
+                path.join(extracted, `binaryen-${release.data.tag_name}`),
                 "binaryen",
                 version,
                 target

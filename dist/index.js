@@ -6,6 +6,7 @@ const _core = /*#__PURE__*/ _interop_require_wildcard(require("@actions/core"));
 const _github = /*#__PURE__*/ _interop_require_wildcard(require("@actions/github"));
 const _toolcache = /*#__PURE__*/ _interop_require_wildcard(require("@actions/tool-cache"));
 const _nodeassert = /*#__PURE__*/ _interop_require_wildcard(require("node:assert"));
+const _nodepath = /*#__PURE__*/ _interop_require_wildcard(require("node:path"));
 function _getRequireWildcardCache(nodeInterop) {
     if (typeof WeakMap !== "function") return null;
     var cacheBabelInterop = new WeakMap();
@@ -62,6 +63,7 @@ async function main() {
         }));
         _nodeassert.match(release.data.tag_name, /^version\_/g);
         const version = release.data.tag_name.substring(8);
+        _core.debug(`found Binaryen (version ${version})`);
         let os;
         switch(process.platform){
             case "linux":
@@ -91,6 +93,7 @@ async function main() {
                 _core.warning(`unknown architecture "${process.arch}"`);
         }
         const target = `${arch}-${os}`;
+        _core.debug(`target platform: ${target}`);
         const end = `${target}.tar.gz`;
         const cachedPath = _toolcache.find("binaryen", version, target);
         if (cachedPath.length > 0) {
@@ -100,9 +103,10 @@ async function main() {
         }
         for (let asset of release.data.assets){
             if (!asset.name.endsWith(end)) continue;
+            _core.debug(`found matching asset: ${asset.name}`);
             const tarball = await _toolcache.downloadTool(asset.browser_download_url);
             const extracted = await _toolcache.extractTar(tarball);
-            const cached = await _toolcache.cacheDir(extracted, "binaryen", version, target);
+            const cached = await _toolcache.cacheDir(_nodepath.join(extracted, `binaryen-${release.data.tag_name}`), "binaryen", version, target);
             _core.addPath(cached);
             break brk;
         }

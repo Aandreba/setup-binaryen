@@ -19,6 +19,8 @@ jobs:
 
       - name: Setup Binaryen
         uses: ./
+        env:
+          ACTIONS_RUNNER_DEBUG: true
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 

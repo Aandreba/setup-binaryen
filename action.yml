@@ -7,4 +7,4 @@ inputs:
     default: 'latest'
 runs:
   using: 'node16'
-  main: 'dist/setup-binaryen.js'
+  main: 'dist/index.js'

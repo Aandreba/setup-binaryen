@@ -19,6 +19,8 @@ jobs:
 
       - name: Setup Binaryen
         uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Test binaryes exist
         run: wasm-opt --help

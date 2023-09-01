@@ -47,7 +47,10 @@ function _interop_require_wildcard(obj, nodeInterop) {
 }
 async function main() {
     brk: try {
-        const octo = _github.getOctokit(await _core.getIDToken());
+        const token = _core.getInput("token", {
+            required: true
+        });
+        const octo = _github.getOctokit(token);
         let tag = _core.getInput("version");
         const release = await (tag.length === 0 || tag === "latest" ? octo.rest.repos.getLatestRelease({
             owner: "WebAssembly",

@@ -5,8 +5,9 @@ import * as assert from "node:assert"
 
 async function main() {
     brk: try {
-        const octo = github.getOctokit(await core.getIDToken())
-        let tag: string | undefined = core.getInput("version")
+        const token = core.getInput("token", { required: true })
+        const octo = github.getOctokit(token)
+        let tag: string = core.getInput("version")
 
         const release = await (tag.length === 0 || tag === "latest"
             ? octo.rest.repos.getLatestRelease({

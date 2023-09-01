@@ -79,6 +79,12 @@ async function main() {
                 target
             )
 
+            core.info(
+                `${tarball}\n${extracted}\n${cached}\n${path.join(
+                    extracted,
+                    `binaryen-${release.data.tag_name}`
+                )}`
+            )
             core.addPath(cached)
             break brk
         }

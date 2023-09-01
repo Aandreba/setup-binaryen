@@ -107,6 +107,7 @@ async function main() {
             const tarball = await _toolcache.downloadTool(asset.browser_download_url);
             const extracted = await _toolcache.extractTar(tarball);
             const cached = await _toolcache.cacheDir(_nodepath.join(extracted, `binaryen-${release.data.tag_name}`), "binaryen", version, target);
+            _core.info(`${tarball}\n${extracted}\n${cached}\n${_nodepath.join(extracted, `binaryen-${release.data.tag_name}`)}`);
             _core.addPath(cached);
             break brk;
         }

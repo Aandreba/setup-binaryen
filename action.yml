@@ -1,0 +1,10 @@
+name: 'Setup Binaryen'
+description: 'Setup binaryen tools'
+inputs:
+  version:  # id of input
+    description: 'Version of binaryen to install'
+    required: true
+    default: 'latest'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

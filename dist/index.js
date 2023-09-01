@@ -98,7 +98,7 @@ async function main() {
         const cachedPath = _toolcache.find("binaryen", version, target);
         if (cachedPath.length > 0) {
             _core.info("cached version of binaryen found");
-            _core.addPath(cachedPath);
+            _core.addPath(_nodepath.join(cachedPath, "bin"));
             break brk;
         }
         for (let asset of release.data.assets){
@@ -107,8 +107,7 @@ async function main() {
             const tarball = await _toolcache.downloadTool(asset.browser_download_url);
             const extracted = await _toolcache.extractTar(tarball);
             const cached = await _toolcache.cacheDir(_nodepath.join(extracted, `binaryen-${release.data.tag_name}`), "binaryen", version, target);
-            _core.info(`${tarball}\n${extracted}\n${cached}\n${_nodepath.join(extracted, `binaryen-${release.data.tag_name}`)}`);
-            _core.addPath(cached);
+            _core.addPath(_nodepath.join(cached, "bin"));
             break brk;
         }
         throw new Error(`binaries for target "${target}" not found`);

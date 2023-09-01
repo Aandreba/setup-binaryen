@@ -62,7 +62,7 @@ async function main() {
         const cachedPath = cache.find("binaryen", version, target)
         if (cachedPath.length > 0) {
             core.info("cached version of binaryen found")
-            core.addPath(cachedPath)
+            core.addPath(path.join(cachedPath, "bin"))
             break brk
         }
 
@@ -79,13 +79,7 @@ async function main() {
                 target
             )
 
-            core.info(
-                `${tarball}\n${extracted}\n${cached}\n${path.join(
-                    extracted,
-                    `binaryen-${release.data.tag_name}`
-                )}`
-            )
-            core.addPath(cached)
+            core.addPath(path.join(cached, "bin"))
             break brk
         }
 

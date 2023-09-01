@@ -59,7 +59,7 @@ async function main() {
         core.info(`target platform: ${target}`)
         const end = `${target}.tar.gz`
 
-        const cachedPath = cache.find("binaryen", version, target)
+        const cachedPath = cache.find("binaryen", `${version}.0.0`)
         if (cachedPath.length > 0) {
             core.info("cached version of binaryen found")
             core.addPath(path.join(cachedPath, "bin"))
@@ -75,8 +75,7 @@ async function main() {
             const cached = await cache.cacheDir(
                 path.join(extracted, `binaryen-${release.data.tag_name}`),
                 "binaryen",
-                version,
-                target
+                `${version}.0.0`
             )
 
             core.addPath(path.join(cached, "bin"))

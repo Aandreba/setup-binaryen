@@ -95,7 +95,7 @@ async function main() {
         const target = `${arch}-${os}`;
         _core.info(`target platform: ${target}`);
         const end = `${target}.tar.gz`;
-        const cachedPath = _toolcache.find("binaryen", version, target);
+        const cachedPath = _toolcache.find("binaryen", `${version}.0.0`);
         if (cachedPath.length > 0) {
             _core.info("cached version of binaryen found");
             _core.addPath(_nodepath.join(cachedPath, "bin"));
@@ -106,7 +106,7 @@ async function main() {
             _core.info(`found matching asset: ${asset.name}`);
             const tarball = await _toolcache.downloadTool(asset.browser_download_url);
             const extracted = await _toolcache.extractTar(tarball);
-            const cached = await _toolcache.cacheDir(_nodepath.join(extracted, `binaryen-${release.data.tag_name}`), "binaryen", version, target);
+            const cached = await _toolcache.cacheDir(_nodepath.join(extracted, `binaryen-${release.data.tag_name}`), "binaryen", `${version}.0.0`);
             _core.addPath(_nodepath.join(cached, "bin"));
             break brk;
         }

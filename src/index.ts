@@ -12,11 +12,11 @@ async function main() {
         const release = await (tag.length === 0 || tag === "latest"
             ? octo.rest.repos.getLatestRelease({
                   owner: "WebAssembly",
-                  repo: "binary",
+                  repo: "binaryen",
               })
             : octo.rest.repos.getReleaseByTag({
                   owner: "WebAssembly",
-                  repo: "binary",
+                  repo: "binaryen",
                   tag: `version_${tag}`,
               }))
 

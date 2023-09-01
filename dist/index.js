@@ -54,10 +54,10 @@ async function main() {
         let tag = _core.getInput("version");
         const release = await (tag.length === 0 || tag === "latest" ? octo.rest.repos.getLatestRelease({
             owner: "WebAssembly",
-            repo: "binary"
+            repo: "binaryen"
         }) : octo.rest.repos.getReleaseByTag({
             owner: "WebAssembly",
-            repo: "binary",
+            repo: "binaryen",
             tag: `version_${tag}`
         }));
         _nodeassert.match(release.data.tag_name, /^version\_/g);

@@ -1,0 +1,20 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test-lints:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Binaryen
+        uses: ./
+
+      - name: Test binaryes exist
+        run: wasm-opt --help

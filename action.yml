@@ -6,10 +6,11 @@ branding:
 inputs:
   token:
     description: "Github Token"
-    required: true
+    required: false
+    default: ${{ github.token }}
   version:  # id of input
     description: 'Version of binaryen to install'
-    required: true
+    required: false
     default: 'latest'
 runs:
   using: 'node16'
